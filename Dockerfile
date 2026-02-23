@@ -17,6 +17,19 @@ RUN --mount=type=cache,target=/root/.cache \
     --no-install-project
 
 
+FROM uv AS test
+RUN --mount=type=cache,target=/root/.cache \
+    --mount=type=bind,source=uv.lock,target=uv.lock \
+    --mount=type=bind,source=pyproject.toml,target=pyproject.toml \
+    uv sync \
+    --locked \
+    --no-install-project
+COPY ./src /app/src
+COPY ./tests /app/tests
+COPY pytest.ini /app/pytest.ini
+WORKDIR /app
+CMD ["uv", "run", "pytest"]
+
 FROM python:3.13.3 AS prod
 ENV PATH=/app/bin:$PATH
 RUN <<EOT
