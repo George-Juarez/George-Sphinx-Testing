@@ -28,8 +28,9 @@ COPY ./src /app/src
 COPY ./tests /app/tests
 COPY pytest.ini /app/pytest.ini
 WORKDIR /app
-CMD ["uv", "run", "pytest"]
-CMD ["uv", "run", "ruff", "check"]
+# CMD ["uv", "run", "pytest"]
+# CMD ["uv", "run", "ruff", "check"]
+ CMD ["sh", "-c", "uv run ruff check . && uv run pytest"]
 
 FROM python:3.13.3 AS prod
 ENV PATH=/app/bin:$PATH
