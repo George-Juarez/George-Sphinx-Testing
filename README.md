@@ -29,3 +29,5 @@ Task:
 3. Our code should really match all our other projects, so we need to make sure ruff believes its syntactically valid, how can we force that before committing.
 4. How can we resolve the code quality issue we have?
 5. Is there anything else you think would be beneficial in a CI/CD pipeline for this application?
+
+aHGXCTFA
