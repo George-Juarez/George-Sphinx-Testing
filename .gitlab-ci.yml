@@ -1,0 +1,34 @@
+.base_ruff:
+  stage: build
+  interruptible: true
+  image:
+    name: ghcr.io/astral-sh/ruff:0.11.6-alpine
+  before_script:
+    - cd $CI_PROJECT_DIR
+    - ruff --version
+
+Ruff Check:
+  extends: .base_ruff
+  script:
+    - ruff check --output-format=gitlab > code-quality-report.json
+  artifacts:
+    reports:
+      codequality: $CI_PROJECT_DIR/code-quality-report.json
+
+Ruff Format:
+  extends: .base_ruff
+  script:
+    - ruff format --diff
+
+docker:
+  stage: build
+  image: docker:24.0.5
+  services:
+    - name: docker:24.0.5-dind
+      alias: docker
+  before_script:
+    - docker info
+  script:
+    - docker build --target test -t sample-test .
+    - docker run sample-test
+    - docker build --target prod -t sample .

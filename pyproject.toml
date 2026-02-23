@@ -1,0 +1,23 @@
+[project]
+name = "sample"
+version = "0.1.0"
+description = "Very Important Application "
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "flask>=3.1.0",
+]
+
+[dependency-groups]
+dev = [
+    "pytest>=8.3.5",
+    "ruff>=0.11.6",
+]
+
+
+[tool.ruff]
+line-length = 120
+
+[tool.ruff.lint]
+select = ["E", "F", "I"]
+ignore = ["E501"]
